@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Adding Labels</title>
+		<script type="text/javascript" src="../d3.v3.js"></script>
+		<style type="text/css">
+			
+			body {
+				background-color: #ddddff;
+			}
+
+			svg {
+				background-color: white;
+			}
+			
+			.axis path,
+			.axis line {
+				fill: none;
+				stroke: black;
+				shape-rendering: crispEdges;
+			}
+			
+			.axis text {
+				font-family: sans-serif;
+				font-size: 11px;
+			}
+
+		</style>
+	</head>
+	<body>
+
+		<script type="text/javascript">		
+
+
+			var w = 500;
+			var h = 400;
+			var padding = [ 20, 10, 20, 50 ];  //Top, right, bottom, left
+
+
+
+			var widthScale = d3.scale.linear()
+								.range([ 0, w - padding[1] - padding[3] ]);
+			
+			var heightScale = d3.scale.ordinal()
+								.rangeRoundBands([ padding[0], h - padding[2] ], 0.1);
+
+
+
+			var xAxis = d3.svg.axis()
+							.scale(widthScale)
+							.orient("bottom");
+
+			var yAxis = d3.svg.axis()
+							.scale(heightScale)
+							.orient("left");
+
+
+
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+
+
+			d3.csv("betterlifeindex.csv", function(data) {
+
+				data.sort(function(a, b) {
+					return d3.descending(+a.lifeSatisfaction, +b.lifeSatisfaction);
+				});
+
+				widthScale.domain([ 0, d3.max(data, function(d) {
+					return +d.lifeSatisfaction;
+				}) ]);
+
+				heightScale.domain(data.map(function(d) { return d.country; } ));
+
+				var rects = svg.selectAll("rect")
+								.data(data)
+								.enter()
+								.append("rect");
+
+				rects.attr("x", padding[3])
+					.attr("y", function(d) {
+						return heightScale(d.country);
+					})
+					.attr("width", function(d) {
+						return widthScale(d.lifeSatisfaction);
+					})
+					.attr("height", heightScale.rangeBand())
+					.append("title")
+					.text(function(d) {
+						return d.country + "'s life satisfaction score is " + d.lifeSatisfaction;
+					});
+
+				svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(" + padding[3] + "," + (h - padding[2]) + ")")
+					.call(xAxis);
+
+				svg.append("g")
+					.attr("class", "y axis")
+					.attr("transform", "translate(" + (padding[3] - 5) + ",0)")
+					.call(yAxis);
+
+			});
+
+
+		</script>
+
+	</body>
+</html>

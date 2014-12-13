@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Scaling Bar Heights</title>
+		<script type="text/javascript" src="../d3.v3.js"></script>
+		<style type="text/css">
+			
+			body {
+				background-color: #ddddff;
+			}
+
+			svg {
+				background-color: white;
+			}
+
+		</style>
+	</head>
+	<body>
+
+		<script type="text/javascript">		
+
+
+			var w = 300;
+			var h = 400;
+
+
+
+			var widthScale = d3.scale.linear()
+								.range([ 0, w ]);
+			
+			var heightScale = d3.scale.ordinal()
+								.rangeBands([ 0, h ]);
+
+
+
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+
+
+			d3.csv("betterlifeindex.csv", function(data) {
+
+				data.sort(function(a, b) {
+					return d3.descending(+a.lifeSatisfaction, +b.lifeSatisfaction);
+				});
+
+				widthScale.domain([ 0, d3.max(data, function(d) {
+					return +d.lifeSatisfaction;
+				}) ]);
+
+				heightScale.domain(d3.range(data.length));
+
+				var rects = svg.selectAll("rect")
+								.data(data)
+								.enter()
+								.append("rect");
+
+				rects.attr("x", 0)
+					.attr("y", function(d, i) {
+						return i * heightScale.rangeBand();
+					})
+					.attr("width", function(d) {
+						return widthScale(d.lifeSatisfaction);
+					})
+					.attr("height", heightScale.rangeBand())
+					.append("title")
+					.text(function(d) {
+						return d.country + "'s life satisfaction score is " + d.lifeSatisfaction;
+					});
+
+			});
+
+
+		</script>
+
+	</body>
+</html>

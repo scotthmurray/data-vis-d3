@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Creating SVG Elements from Data</title>
+		<script type="text/javascript" src="../d3.v3.js"></script>
+		<style type="text/css">
+			
+			body {
+				background-color: #ddddff;
+			}
+
+			svg {
+				background-color: white;
+			}
+
+		</style>
+	</head>
+	<body>
+
+		<script type="text/javascript">		
+
+
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", 300)
+						.attr("height", 400);
+
+
+
+			d3.csv("betterlifeindex.csv", function(data) {
+
+				svg.selectAll("rect")
+					.data(data)
+					.enter()
+					.append("rect")
+					.attr("x", 0)
+					.attr("y", 0)
+					.attr("width", 300)
+					.attr("height", 20);
+
+			});
+
+
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<people>
+	<person>
+		<name>Alice</name>
+		<age>25</age>
+		<title>Graduate Student</title>
+	</person>
+	<person>
+		<name>Bob</name>
+		<age>34</age>
+		<title>Associate Editor</title>
+	</person>
+	<person>
+		<name>Carmen</name>
+		<age>42</age>
+		<title>Senior Editor</title>
+	</person>
+	<person>
+		<name>Dan</name>
+		<age>19</age>
+		<title>Production Intern</title>
+	</person>
+	<person>
+		<name>Esmerelda</name>
+		<age>29</age>
+		<title>Freelance Reporter</title>
+	</person>
+	<person>
+		<name>Frank</name>
+		<age>51</age>
+		<title>Photographer</title>
+	</person>
+</people>

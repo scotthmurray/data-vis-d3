@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Adding Tooltips</title>
+		<script type="text/javascript" src="../d3.v3.js"></script>
+		<style type="text/css">
+			
+			body {
+				background-color: #ddddff;
+			}
+
+			svg {
+				background-color: white;
+			}
+
+		</style>
+	</head>
+	<body>
+
+		<script type="text/javascript">		
+
+
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", 300)
+						.attr("height", 400);
+
+
+
+			d3.csv("betterlifeindex.csv", function(data) {
+
+				data.sort(function(a, b) {
+					return d3.descending(a.lifeSatisfaction, b.lifeSatisfaction);
+
+					//If your numeric values aren't sorting properly,
+					//try commenting out the line above, and instead using:
+					//
+					//return d3.descending(+a.lifeSatisfaction, +b.lifeSatisfaction);
+					//
+					//Data coming in from the CSV is saved as strings (text),
+					//so the + signs here force JavaScript to treat those
+					//strings instead as numeric values, thereby fixing the
+					//sort order (hopefully!).
+				});
+
+				var rects = svg.selectAll("rect")
+								.data(data)
+								.enter()
+								.append("rect");
+
+				rects.attr("x", 0)
+					.attr("y", function(d, i) {
+						return i * 10;
+					})
+					.attr("width", function(d) {
+						return d.lifeSatisfaction * 30;
+					})
+					.attr("height", 8)
+					.append("title")
+					.text(function(d) {
+						return d.country + "'s life satisfaction score is " + d.lifeSatisfaction;
+					});
+
+			});
+
+
+		</script>
+
+	</body>
+</html>
