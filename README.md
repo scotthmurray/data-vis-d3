@@ -1,6 +1,6 @@
-# data-journalism-d3
+# data-vis-d3
 
-These code examples accompany the course “Data Visualization and Infographics with D3,” taught by [Alberto Cairo](http://thefunctionalart.com/) and [Scott Murray](http://alignedleft.com/), and offered through the [Knight Center for Journalism in the Americas](http://open.journalismcourses.org) at UT Austin.
+These code examples accompany the course “[Data Visualization and Infographics with D3](http://journalismcourses.org/D30815.html),” taught by [Alberto Cairo](http://thefunctionalart.com/) and [Scott Murray](http://alignedleft.com/), and offered through the [Knight Center for Journalism in the Americas](http://open.journalismcourses.org) at UT Austin.
 
 Examples are grouped by module, with each folder corresponding to a different module of the course.
 
